@@ -1,0 +1,234 @@
+\documentclass[letter, 11pt]{article}
+%% ================================
+%% Packages =======================
+\usepackage[utf8]{inputenc}      %%
+\usepackage[T1]{fontenc}         %%
+\usepackage{lmodern}             %%
+\usepackage[spanish]{babel}      %%
+\decimalpoint                    %%
+\usepackage{fullpage}            %%
+\usepackage{fancyhdr}            %%
+\usepackage{graphicx}            %%
+\usepackage{amsmath}             %%
+\usepackage{color}               %%
+\usepackage{mdframed}            %%
+\usepackage[colorlinks]{hyperref}%%
+%% ================================
+%% ================================
+
+%% ================================
+%% Page size/borders config =======
+\setlength{\oddsidemargin}{0in}  %%
+\setlength{\evensidemargin}{0in} %%
+\setlength{\marginparwidth}{0in} %%
+\setlength{\marginparsep}{0in}   %%
+\setlength{\voffset}{-0.5in}     %%
+\setlength{\hoffset}{0in}        %%
+\setlength{\topmargin}{0in}      %%
+\setlength{\headheight}{54pt}    %%
+\setlength{\headsep}{1em}        %%
+\setlength{\textheight}{8.5in}   %%
+\setlength{\footskip}{0.5in}     %%
+%% ================================
+%% ================================
+
+%% =============================================================
+%% Headers setup, environments, colors, etc.
+%%
+%% Header ------------------------------------------------------
+\fancypagestyle{firstpage}
+{
+  \fancyhf{}
+  \lhead{\includegraphics[height=4.5em]{LogoDFI.jpg}}
+  \rhead{FI3104-1 \semestre\\
+         Métodos Numéricos para la Ciencia e Ingeniería\\
+         Prof.: \profesor}
+  \fancyfoot[C]{\thepage}
+}
+
+\pagestyle{plain}
+\fancyhf{}
+\fancyfoot[C]{\thepage}
+%% -------------------------------------------------------------
+%% Environments -------------------------------------------------
+\newmdenv[
+  linecolor=gray,
+  fontcolor=gray,
+  linewidth=0.2em,
+  topline=false,
+  bottomline=false,
+  rightline=false,
+  skipabove=\topsep
+  skipbelow=\topsep,
+]{ayuda}
+%% -------------------------------------------------------------
+%% Colors ------------------------------------------------------
+\definecolor{gray}{rgb}{0.5, 0.5, 0.5}
+%% -------------------------------------------------------------
+%% Aliases ------------------------------------------------------
+\newcommand{\scipy}{\texttt{scipy}}
+%% -------------------------------------------------------------
+%% =============================================================
+%% =============================================================================
+%% CONFIGURACION DEL DOCUMENTO =================================================
+%% Llenar con la información pertinente al curso y la tarea
+%%
+\newcommand{\tareanro}{3}
+\newcommand{\fechaentrega}{7/11/2020 21:59 hrs}
+\newcommand{\semestre}{2020B}
+\newcommand{\profesor}{Valentino González}
+%% =============================================================================
+%% =============================================================================
+
+
+\begin{document}
+\thispagestyle{firstpage}
+
+\begin{center}
+  {\uppercase{\LARGE \bf Tarea \tareanro}}\\
+  Fecha de entrega: \fechaentrega
+\end{center}
+
+
+%% =============================================================================
+%% ENUNCIADO ===================================================================
+\noindent{\large \bf Problema}
+
+Para planetas que orbitan cerca del Sol, como Mercurio, el potencial
+gravitacional se puede escribir como:
+
+$$U(r) = - \dfrac{GM_\odot m}{r} + \alpha\dfrac{GM_\odot m}{r^2}$$
+
+\noindent donde $G$ es la constante de gravitación universal, $M_\odot$ es la
+masa del Sol, $m$ es la masa del planeta, $r$ es la distancia entre el planeta
+y el Sol, y $\alpha$ es un número pequeño. Esta corrección a la ley de
+gravitación de Newton se debe a los efectos de los otros planetas del sistema
+solar (particularmente Júpiter) y a efectos relacionados con relatividad
+general.
+
+Bajo este potencial, las órbitas siguen siendo planas pero ya no son cerradas
+sino que precesan, es decir, el afelio (punto más lejano de la órbita) gira
+alrededor del Sol.
+
+En este problema exploraremos este tipo de órbitas y compararemos distintos
+métodos de integración de la ecuación diferencial. También utilizaremos
+programación orientada al objeto como ejercicio práctico para familiarizarnos
+con este paradigma de programación.
+
+\begin{enumerate}
+
+  \item El archivo llamado \texttt{codigos/planeta.py} contiene el esqueleto de
+    la clase Planeta.  Ud. debe implementar los métodos de esa clase. Los
+    docstrings explican en qué debe consistir cada método. Ud. tiene libertad
+    de mejorar los docstrings, y agregar atributos y métodos a la clase según
+    le parezca conveniente para resolver el problema descrito a continuación.
+
+    El archivo llamado \texttt{codigos/solucion\_usando\_planeta.py} muestra cómo
+    incluir la clase \texttt{Planeta} en un script separado. Ud. también puede
+    resolver todo dentro del mismo archivo, en cuyo caso puede descartar
+    \texttt{solucion\_usando\_planeta.py}.
+
+  \item Parta por estudiar el caso $\alpha=0$ y considere las siguientes
+    condiciones iniciales:
+    \begin{flalign*}
+      x_0 &= 10\\
+      y_0 &= 0\\
+      v_x &= 0\\
+    \end{flalign*}
+
+    Además, utilice unidades tales que $GM_\odot m = 1$ y escoja $v_y$ según le
+    parezca (pero asegúrese de que la energía total sea negativa).
+
+    Integre la ecuación de movimiento por aproximadamente 5 órbitas usando los
+    métodos de RK, Verlet, y Beeman. Grafique las órbitas y la energía total
+    del sistema como función del tiempo en los 3 casos. Comente los resultados.
+
+  \item Ahora considere el caso $\alpha=10^{-2.XXX}$ (donde XXX son los 3
+    últimos dígitos de su RUT, antes del dígito verificador). Integre la
+    ecuación de movimiento usando el método de Beeman por al menos 30 órbitas.
+    Determine la velocidad angular de precesión. ¿Cómo lo hizo? En particular,
+    ¿cómo determinó la posición del afelio? Grafique la órbita y la energía
+    como función del tiempo.
+
+\end{enumerate}
+
+\begin{ayuda}
+  \small
+  \noindent {\bf Comentarios.} 
+
+  1. Esta tarea pide explícitamente que utilice OOP (Object Oriented
+  Programming) para su desarrollo. Es un ejercicio útil para aprender esta
+  técnica.
+
+  2. En esta tarea debe implementar Verlet y Beeman pero puede utilizar RK4 (u
+  otro RK de orden superior) de alguna librería o de alguna tarea anterior.
+  Debe indicar en su informe la procedencia del código utilizado para RK.
+
+\end{ayuda}
+
+%% FIN ENUNCIADO ===============================================================
+%% =============================================================================
+
+\vspace{1em}
+\noindent\textbf{Instrucciones Importantes.}
+\begin{itemize}
+
+\item Evaluaremos su uso correcto de \texttt{python}. Si define una función
+  relativametne larga o con muchos parámetros, recuerde escribir el
+  \emph{docstring} que describa los parámetros que recibe la función, el
+  output, y el detalle de qué es lo que hace la función. Recuerde que
+  generalmente es mejor usar varias funciones cortas (que hagan una sola cosa
+  bien) que una muy larga (que lo haga todo).  Utilice nombres explicativos
+  tanto para las funciones como para las variables de su código. El mejor
+  nombre es aquel que permite entender qué hace la función sin tener que leer
+  su implementación ni su \emph{docstring}.
+
+\item Su código debe aprobar la guía sintáctica de estilo
+  (\href{https://www.python.org/dev/peps/pep-0008/}{\texttt{PEP8}}). En
+  \href{http://pep8online.com}{esta página} puede chequear si su código aprueba
+  \texttt{PEP8}.
+
+\item Utilice \texttt{git} durante el desarrollo de la tarea para mantener un
+  historial de los cambios realizados. La siguiente
+  \href{https://education.github.com/git-cheat-sheet-education.pdf}{cheat
+    sheet} le puede ser útil. {\bf Revisaremos el uso apropiado de la
+  herramienta y asignaremos una fracción del puntaje a este ítem.} Realice
+  cambios pequeños y guarde su progreso (a través de \emph{commits})
+  regularmente. No guarde código que no corre o compila (si lo hace por algún
+  motivo deje un mensaje claro que lo indique). Escriba mensajes claros que
+  permitan hacerse una idea de lo que se agregó y/o cambió de un
+  \texttt{commit} al siguiente.
+
+\item Para hacer un informe completo, además de los gráficos que se piden
+  explícitamente, Ud. debe decidir qué es interesante y agregar las figuras
+  correspondientes. No olvide anotar los ejes e incluir una \emph{caption} que
+  describa el contenido de cada figura. Tampoco olvide las unidades asociadas a
+  las cantidades mostradas en los diferentes gráficos.
+
+\item La tarea se entrega subiendo su trabajo a github. Clone este repositorio
+  (el que está en su propia cuenta privada y debiese tener una url como\\
+  \texttt{https://github.com/uchileFI3104B-2020B/03-tarea-nombredeusuario}),
+  trabaje en el código y en el informe y cuando haya terminado asegúrese de
+  hacer un último \texttt{commit} y luego un \texttt{push} para subir todo su
+  trabajo a github.
+
+\item El informe debe ser entregado en formato \texttt{pdf}, este debe ser
+  claro sin información de más ni de menos. \textbf{Esto es muy importante, no
+  escriba de más, esto no mejorará su nota sino que al contrario}. La presente
+  tarea probablemente no requiere informes de más de 4 páginas en total
+  (dependiendo de cuántas figuras incluya; esto no es una regla estricta, sólo
+  una referencia útil).  Asegúrese de utilizar figuras efectivas y tablas para
+  resumir sus resultados.
+
+\item \textbf{Revise su ortografía.}
+
+ \item Repartición de puntaje: 45\% implementación y resolución del problema
+   (más o menos independientemente de la calidad de su código); 40\% calidad
+   del reporte entregado: demuestra comprensión del problema y su solución,
+   claridad del lenguaje, calidad de las figuras utilizadas; 5\% aprueba o no
+   \texttt{PEP8}; 10\% diseño del código: uso efectivo de nombres de variables
+   y funciones, docstrings, \underline{uso de git}, etc.
+
+\end{itemize}
+
+\end{document}
