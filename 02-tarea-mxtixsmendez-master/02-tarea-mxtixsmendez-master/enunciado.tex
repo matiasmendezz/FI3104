@@ -1,0 +1,220 @@
+\documentclass[letter, 11pt]{article}
+%% ================================
+%% Packages =======================
+\usepackage[utf8]{inputenc}      %%
+\usepackage[T1]{fontenc}         %%
+\usepackage{lmodern}             %%
+\usepackage[spanish]{babel}      %%
+\decimalpoint                    %%
+\usepackage{fullpage}            %%
+\usepackage{fancyhdr}            %%
+\usepackage{graphicx}            %%
+\usepackage{amsmath}             %%
+\usepackage{color}               %%
+\usepackage{mdframed}            %%
+\usepackage[colorlinks]{hyperref}%%
+%% ================================
+%% ================================
+
+%% ================================
+%% Page size/borders config =======
+\setlength{\oddsidemargin}{0in}  %%
+\setlength{\evensidemargin}{0in} %%
+\setlength{\marginparwidth}{0in} %%
+\setlength{\marginparsep}{0in}   %%
+\setlength{\voffset}{-0.5in}     %%
+\setlength{\hoffset}{0in}        %%
+\setlength{\topmargin}{0in}      %%
+\setlength{\headheight}{54pt}    %%
+\setlength{\headsep}{1em}        %%
+\setlength{\textheight}{8.5in}   %%
+\setlength{\footskip}{0.5in}     %%
+%% ================================
+%% ================================
+
+%% =============================================================
+%% Headers setup, environments, colors, etc.
+%%
+%% Header ------------------------------------------------------
+\fancypagestyle{firstpage}
+{
+  \fancyhf{}
+  \lhead{\includegraphics[height=4.5em]{LogoDFI.jpg}}
+  \rhead{FI3104-1 \semestre\\
+         Métodos Numéricos para la Ciencia e Ingeniería\\
+         Prof.: \profesor}
+  \fancyfoot[C]{\thepage}
+}
+
+\pagestyle{plain}
+\fancyhf{}
+\fancyfoot[C]{\thepage}
+%% -------------------------------------------------------------
+%% Environments -------------------------------------------------
+\newmdenv[
+  linecolor=gray,
+  fontcolor=gray,
+  linewidth=0.2em,
+  topline=false,
+  bottomline=false,
+  rightline=false,
+  skipabove=\topsep
+  skipbelow=\topsep,
+]{ayuda}
+%% -------------------------------------------------------------
+%% Colors ------------------------------------------------------
+\definecolor{gray}{rgb}{0.5, 0.5, 0.5}
+%% -------------------------------------------------------------
+%% Aliases ------------------------------------------------------
+\newcommand{\scipy}{\texttt{scipy}}
+%% -------------------------------------------------------------
+%% =============================================================
+%% =============================================================================
+%% CONFIGURACION DEL DOCUMENTO =================================================
+%% Llenar con la información pertinente al curso y la tarea
+%%
+\newcommand{\tareanro}{2}
+\newcommand{\fechaentrega}{17/10/2020 21:59 hrs}
+\newcommand{\semestre}{2020B}
+\newcommand{\profesor}{Valentino González}
+%% =============================================================================
+%% =============================================================================
+
+
+\begin{document}
+\thispagestyle{firstpage}
+
+\begin{center}
+  {\uppercase{\LARGE \bf Tarea \tareanro}}\\
+  Fecha de entrega: \fechaentrega
+\end{center}
+
+
+%% =============================================================================
+%% ENUNCIADO ===================================================================
+\noindent{\large \bf Problema 1}
+
+Considere un péndulo simple en un medio viscoso. La ecuación de movimiento es
+la siguiente:
+
+$$ \ddot{\phi} = -\gamma \dot{\phi} - \frac{g}{l} \sin(\phi)$$
+
+\noindent donde $\gamma$ es un coeficiente de fricción, $g$ es la aceleración
+de gravedad y $l$ es el largo del péndulo. En el caso de pequeñas oscilaciones
+se puede aproximar $\sin(\phi)\sim\phi$ y existe una solución analítica para el
+problema.
+
+Considere $l=5.XXX\ {\rm m}$ y $\gamma=2.XXX\ {\rm s^{-1}}$ donde $XXX$ son los 3
+últimos dígitos de su RUT.
+
+\begin{itemize}
+
+  \item Integre la ecuación de movimiento considerando condiciones de borde del
+    estilo $\phi(t=0) = \phi_0$ y $\dot{\phi}(t=0) = 0$. Primero considere un
+    caso $\phi_0$ pequeño y compruebe que la solución es parecida al caso de
+    pequeñas oscilaciones (solución analítica).
+
+  \item Ahora integre nuevamente para $\phi_0=\pi/(2.XXX)$. Compare con la
+    solución analítica para el problema de pequeñas oscilaciones. En
+    particular, estudie la energía del péndulo. ¿Cuál solución pierde energía
+    más rápido? ¿la solución real o la solución de pequeñas oscilaciones?
+
+\end{itemize}
+
+En esta pregunta Ud. debe implementar el método de $RK4$. Discuta cómo eligió
+el paso temporal y qué precisión espera alcanzar.
+
+
+\vspace{1.5em}
+\noindent{\large \bf Problema 2}
+
+El sistema de Lorenz es un set de ecuaciones diferenciales ordinarias conocido
+por tener algunas soluciones caóticas, la más famosa, el llamado atractor de
+Lorenz. El sistema de ecuaciones es el siguiente:
+
+\begin{flalign*}
+  \dfrac{dx}{ds} &= \sigma (y - x)\\
+  \dfrac{dy}{ds} &= x (\rho - z) - y\\
+  \dfrac{dz}{ds} &= xy - \beta z
+\end{flalign*}
+
+La solución más famosa se obtiene con los parámetros $\sigma=10$, $\beta=8/3$ y
+$\rho=28$. Utilice esos parámetros, elija un set de condiciones iniciales
+$(x_0, y_0, z_0)$ e integre la ecuación por un tiempo que estime conveniente.
+Esta vez se pide que utilice un algoritmo $RK4$ pero no necesita implementarlo,
+puede usar los algoritmos disponibles en \texttt{scipy.integrate} o cualquier
+otro que encuentre y que sea de uso libre.  Grafique la solución en 3D: $(x(t),
+y(t), z(t))$.
+
+A continuación perturbe la condición inicial $y_0 \rightarrow (y_0 + 0.0XXX)$,
+donde $XXX$ son los tres últimos dígitos de su RUT. Comente sobre el
+comportamiento de la solución en comparación con el obtenido con las primeras
+condiciones iniciales escogidas.
+
+
+\begin{ayuda}
+  \small
+  \noindent {\bf Ayuda.}
+  Este repositorio incluye el archivo \texttt{3D.py} que demuestra como hacer
+  un plot en 3D usando \texttt{matplotlib}. Puede usar este archivo como guía
+  de ayuda.
+\end{ayuda}
+
+
+%% FIN ENUNCIADO ===============================================================
+%% =============================================================================
+\vspace{1em}
+\noindent{\bf Instrucciones importantes.}
+\begin{itemize}
+
+  \item Utilice \texttt{git} durante el desarrollo de la tarea para mantener un
+    historial de los cambios realizados. La siguiente
+    \href{https://education.github.com/git-cheat-sheet-education.pdf}{cheat
+      sheet} le puede ser útil. \textbf{Revisaremos el uso apropiado
+    de la herramienta y asignaremos una fracción del puntaje a este ítem.}
+    Realice cambios pequeños y guarde su progreso (a través de \emph{commits})
+    regularmente. No guarde código que no corre o compila (si lo hace por algún
+    motivo deje un mensaje claro que lo indique). Escriba mensajes claros que
+    permitan hacerse una idea de lo que se agregó y/o cambió de un
+    \texttt{commit} al siguiente.
+
+  \item Revisaremos su uso correcto de \texttt{python}. Si define una función
+    relativametne larga o con muchos parámetros, recuerde escribir el
+    \emph{docstring} que describa los parámetros que recibe la función, el
+    output, y el detalle de qué es lo que hace la función. Recuerde que
+    generalmente es mejor usar varias funciones cortas (que hagan una sola cosa
+    bien) que una muy larga (que lo haga todo).  Utilice nombres explicativos
+    tanto para las funciones como para las variables de su código.  El mejor
+    nombre es aquel que permite entender qué hace la función sin tener que leer
+    su implementación.
+
+  \item También evaluaremos que su código apruebe la guía de estilo sintáctico
+    \href{https://www.python.org/dev/peps/pep-0008/}{\texttt{PEP8}}. En
+    \href{http://pep8online.com}{esta página} puede chequear si su código
+    aprueba \texttt{PEP8}.
+
+  \item La tarea se entrega subiendo su trabajo a github. Clone este
+    repositorio (el que está en su propia cuenta privada), trabaje en el código
+    y en el informe y cuando haya terminado asegúrese de hacer un último
+    \texttt{commit} y luego un \texttt{push} para subir todo su trabajo a
+    github.
+
+  \item El informe debe ser entregado en formato \texttt{pdf}, este debe ser
+    claro sin información de más ni de menos. \textbf{Esto es muy importante,
+    no escriba de más, esto no mejorará su nota sino que al contrario}. La
+    presente tarea probablemente no requiere informes de más de 5 páginas en
+    total (esto sólo una referencia útil).  Asegúrese de utilizar figuras
+    efectivas y/o tablas para resumir sus resultados. \textbf{Revise su
+    ortografía}.
+
+  \item No olvide indicar su RUT en el informe.
+
+  \item Repartición de puntaje: 40\% implementación y resolución del problema
+    (independiente de la calidad de su código); 45\% calidad del reporte
+    entregado: demuestra comprensión del problema y su solución, claridad del
+    lenguaje, calidad de las figuras utilizadas; 5\% aprueba a no
+    \texttt{PEP8}; 10\% diseño del código: modularidad, uso efectivo de nombres
+    de variables y funciones, docstrings, \underline{uso de git}, etc.
+
+\end{itemize}
+\end{document}
