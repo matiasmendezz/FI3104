@@ -1,0 +1,249 @@
+\documentclass[letter, 11pt]{article}
+%% ================================
+%% Packages =======================
+\usepackage[utf8]{inputenc}      %%
+\usepackage[T1]{fontenc}         %%
+\usepackage{lmodern}             %%
+\usepackage[spanish]{babel}      %%
+\decimalpoint                    %%
+\usepackage{fullpage}            %%
+\usepackage{fancyhdr}            %%
+\usepackage{graphicx}            %%
+\usepackage{amsmath}             %%
+\usepackage{color}               %%
+\usepackage{mdframed}            %%
+\usepackage[colorlinks]{hyperref}%%
+%% ================================
+%% ================================
+
+%% ================================
+%% Page size/borders config =======
+\setlength{\oddsidemargin}{0in}  %%
+\setlength{\evensidemargin}{0in} %%
+\setlength{\marginparwidth}{0in} %%
+\setlength{\marginparsep}{0in}   %%
+\setlength{\voffset}{-0.5in}     %%
+\setlength{\hoffset}{0in}        %%
+\setlength{\topmargin}{0in}      %%
+\setlength{\headheight}{54pt}    %%
+\setlength{\headsep}{1em}        %%
+\setlength{\textheight}{8.5in}   %%
+\setlength{\footskip}{0.5in}     %%
+%% ================================
+%% ================================
+
+%% =============================================================
+%% Headers setup, environments, colors, etc.
+%%
+%% Header ------------------------------------------------------
+\fancypagestyle{firstpage}
+{
+  \fancyhf{}
+  \lhead{\includegraphics[height=4.5em]{LogoDFI.jpg}}
+  \rhead{FI3104-1 \semestre\\
+         Métodos Numéricos para la Ciencia e Ingeniería\\
+         Prof.: \profesor}
+  \fancyfoot[C]{\thepage}
+}
+
+\pagestyle{plain}
+\fancyhf{}
+\fancyfoot[C]{\thepage}
+%% -------------------------------------------------------------
+%% Environments -------------------------------------------------
+\newmdenv[
+  linecolor=gray,
+  fontcolor=gray,
+  linewidth=0.2em,
+  topline=false,
+  bottomline=false,
+  rightline=false,
+  skipabove=\topsep
+  skipbelow=\topsep,
+]{ayuda}
+%% -------------------------------------------------------------
+%% Colors ------------------------------------------------------
+\definecolor{gray}{rgb}{0.5, 0.5, 0.5}
+%% -------------------------------------------------------------
+%% Aliases ------------------------------------------------------
+\newcommand{\scipy}{\texttt{scipy}}
+%% -------------------------------------------------------------
+%% =============================================================
+%% =============================================================================
+%% CONFIGURACION DEL DOCUMENTO =================================================
+%% Llenar con la información pertinente al curso y la tarea
+%%
+\newcommand{\tareanro}{05}
+\newcommand{\fechaentrega}{09/12/2020 21:59 hrs}
+\newcommand{\semestre}{2020B}
+\newcommand{\profesor}{Valentino González}
+%% =============================================================================
+%% =============================================================================
+
+
+\begin{document}
+\thispagestyle{firstpage}
+
+\begin{center}
+  {\uppercase{\LARGE \bf Tarea \tareanro}}\\
+  Fecha de entrega: \fechaentrega
+\end{center}
+
+
+%% =============================================================================
+%% ENUNCIADO ===================================================================
+\noindent{\large \bf Problema 1} (Código e Informe)
+
+Estime las posición del centro de masa de un sólido descrito por la
+intersección de un toro y un cilindro dados por las siguientes ecuaciones:
+
+\begin{align}
+  {\rm Toro} : z^2 + \left( \sqrt{x^2 + y^2} - 3 \right)^2 &\leq 1\\
+  {\rm Cilindro} : (x - 2)^2 + z^2 &\leq 1
+\end{align}
+
+La densidad del sólido varía según la siguiente ecuación:
+
+$$ \rho(x, y, z) = 0.5 \times (x^2 + y^2 + z^2) $$
+
+Resuelva el problema usando alguno de los métodos de integración de Monte
+Carlo, para ello debe definirse un volúmen, ojalá lo más pequeño posible, que
+englobe al sólido sobre el cual quiere integrar.
+
+Debido a la naturaleza aleatoria del algoritmo, la determinación que haga tiene
+una incertidumbre asociada. Para estimar la incertidumbre, repita el
+experimento un número grande de veces y reporte el valor promedio y su
+desviación estándar. Discuta en su informe cómo se comporta el error en función
+del número de puntos utilizados para la estimación del volumen.
+
+\begin{ayuda}
+  \small
+  \noindent {\bf Ayuda.}
+
+  Le puede ser útil mirar la sección ``Simple Monte Carlo Integration'' del
+  libro ``Numerical Reicpes in C''.
+
+\end{ayuda}
+
+\vspace{1em}
+\noindent{\large \bf Problema 2} (Código y gráfico solamente)
+
+Se desea obtener una muestra aleatoria de números con distribución densidad de
+probabilidad proporcional a la siguiente función:
+
+$$
+W(x) = \frac{1}{5\sqrt{\pi}} \left( 2 e^{-(x-1.5)^2} + 3 e^{-(x+1)^2} \right)
+$$
+
+Utilice el algoritmo de Metrópolis partiendo de un $x_0$ escogido a gusto entre
+-2 y 2 y con una distribución propuesta $x_p = x_n + \delta \times r$, donde r
+es una variable aleatoria de la distribución uniforme U(-1, 1). La variable
+$\delta$ tiene un valor fijo que Ud. debe determinar. De acuerdo a la
+literatura, un buen valor  de $\delta$ es aquel para el cual se aceptan
+aproximadamente 50\% de las proposiciones.
+
+Genere una muestra de unos 10 millones de puntos. Para comprobar que su
+resultado es adecuado grafique $W(x)$ y un histograma de sus variables
+aleatorias ambos apropiadamente normalizados.
+
+Determine la incertidumbre asociada a cada caja (bin) del histograma y \textbf{
+grafique el histograma con las barras de error asociadas}.
+
+\begin{ayuda}
+  \small
+  \noindent {\bf Ayuda.}
+
+  La estrategia sugerida para determinar los errores asociados es realizar una
+  simulación estilo Monte Carlo: repita muchas veces (N = 100 o más) el
+  procedimiento completo del problema, pero cada vez utilice una semilla
+  distinta, o un punto de partida distintos o ambos. El resultado es que
+  obtendrá N histogramas que deben ser distintos debido a la naturaleza
+  aleatoria del procedimiento. Para un bin dado, con N valores distintos, una
+  forma de definir el tamaño de la barra de error es hacerla igual a la
+  desviación estándar de de los N valores para ese bin.
+
+\end{ayuda}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\vspace{2em}
+\noindent\textbf{Instrucciones Importantes.}
+\begin{itemize}
+
+\item Para reducir la cantidad de trabajo necesaria para completar esta tarea,
+  sólo debe escribir un informe para el Problema 1. De todos modos debe
+  entregar el código escrito para ambos problemas y el gráfico solicitado en el
+  Problema 2
+
+ \item Repartición de puntaje:
+
+   \subitem - 30\% Código Problema 1. Implementación y resolución del problema.
+     
+    \subitem - 30\% Informe Problema 1. Demuestra comprensión del problema y su
+    solución, claridad del lenguaje, calidad de las figuras y/o tablas
+    utilizadas. Para esta tarea el informe probablemente no require más de 3
+    páginas pero esto es sólo una referencia.
+
+    \subitem - 30\% Código y gráfico Problema 2. Implementación y resolución
+    del problema.
+
+    \subitem - 5\% Códigos aprueban a no \texttt{PEP8}.
+
+    \subitem - 5\% Diseño del código: modularidad, uso efectivo de nombres de
+    variables y funciones, docstrings, \underline{uso de git}, etc
+
+
+\item Evaluaremos su uso correcto de \texttt{python}. Si define una función
+  relativametne larga o con muchos parámetros, recuerde escribir el
+  \emph{docstring} que describa los parámetros que recibe la función, el
+  output, y el detalle de qué es lo que hace la función. Recuerde que
+  generalmente es mejor usar varias funciones cortas (que hagan una sola cosa
+  bien) que una muy larga (que lo haga todo).  Utilice nombres explicativos
+  tanto para las funciones como para las variables de su código. El mejor
+  nombre es aquel que permite entender qué hace la función sin tener que leer
+  su implementación ni su \emph{docstring}.
+
+\item Su código debe aprobar la guía sintáctica de estilo
+  (\href{https://www.python.org/dev/peps/pep-0008/}{\texttt{PEP8}}). En
+  \href{http://pep8online.com}{esta página} puede chequear si su código aprueba
+  \texttt{PEP8}.
+
+\item Utilice \texttt{git} durante el desarrollo de la tarea para mantener un
+  historial de los cambios realizados. La siguiente
+  \href{https://education.github.com/git-cheat-sheet-education.pdf}{cheat
+    sheet} le puede ser útil. {\bf Revisaremos el uso apropiado de la
+  herramienta y asignaremos una fracción del puntaje a este ítem.} Realice
+  cambios pequeños y guarde su progreso (a través de \emph{commits})
+  regularmente. No guarde código que no corre o compila (si lo hace por algún
+  motivo deje un mensaje claro que lo indique). Escriba mensajes claros que
+  permitan hacerse una idea de lo que se agregó y/o cambió de un
+  \texttt{commit} al siguiente.
+
+\item Al hacer el informe usted debe decidir qué es interesante y agregar las
+  figuras correspondientes. No olvide anotar los ejes, las unidades e incluir
+  una \emph{caption} o título que describa el contenido de cada figura.
+
+\item La tarea se entrega subiendo su trabajo a github. Trabaje en el código y
+  en el informe, haga \textit{commits} regulares y cuando haya terminado
+  asegúrese de hacer un último \texttt{commit} y luego un \texttt{push} para
+  subir todo su trabajo a github. \textbf{REVISE SU REPOSITORIO PARA ASEGURARSE
+  QUE SUBIÓ LA TAREA. SI UD. NO PUEDE VER SU INFORME EN GITHUB.COM, TAMPOCO
+PODREMOS NOSOTROS.}
+
+\item El informe debe ser entregado en formato \texttt{pdf}, este debe ser
+  claro sin información de más ni de menos. \textbf{Esto es muy importante, no
+  escriba de más, esto no mejorará su nota sino que al contrario}. La presente
+  tarea probablemente no requiere informes de más de 3 páginas. Asegúrese de
+  utilizar figuras efectivas y tablas para resumir sus resultados.
+
+\item \textbf{REVISE SU ORTOGRAFÍA.}
+
+
+\end{itemize}
+
+%% FIN ENUNCIADO ===============================================================
+%% =============================================================================
+
+\end{document}
