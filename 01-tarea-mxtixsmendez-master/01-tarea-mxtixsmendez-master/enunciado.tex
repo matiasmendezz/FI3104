@@ -1,0 +1,194 @@
+\documentclass[letter, 11pt]{article}
+%% ================================
+%% Packages =======================
+\usepackage[utf8]{inputenc}      %%
+\usepackage[T1]{fontenc}         %%
+\usepackage{lmodern}             %%
+\usepackage[spanish]{babel}      %%
+\decimalpoint                    %%
+\usepackage{fullpage}            %%
+\usepackage{fancyhdr}            %%
+\usepackage{graphicx}            %%
+\usepackage{amsmath}             %%
+\usepackage{color}               %%
+\usepackage{mdframed}            %%
+\usepackage[colorlinks]{hyperref}%%
+%% ================================
+%% ================================
+
+%% ================================
+%% Page size/borders config =======
+\setlength{\oddsidemargin}{0in}  %%
+\setlength{\evensidemargin}{0in} %%
+\setlength{\marginparwidth}{0in} %%
+\setlength{\marginparsep}{0in}   %%
+\setlength{\voffset}{-0.5in}     %%
+\setlength{\hoffset}{0in}        %%
+\setlength{\topmargin}{0in}      %%
+\setlength{\headheight}{54pt}    %%
+\setlength{\headsep}{1em}        %%
+\setlength{\textheight}{8.5in}   %%
+\setlength{\footskip}{0.5in}     %%
+%% ================================
+%% ================================
+
+%% =============================================================
+%% Headers setup, environments, colors, etc.
+%%
+%% Header ------------------------------------------------------
+\fancypagestyle{firstpage}
+{
+  \fancyhf{}
+  \lhead{\includegraphics[height=4.5em]{LogoDFI.jpg}}
+  \rhead{FI3104-1 \semestre\\
+         Métodos Numéricos para la Ciencia e Ingeniería\\
+         Prof.: \profesor}
+  \fancyfoot[C]{\thepage}
+}
+
+\pagestyle{plain}
+\fancyhf{}
+\fancyfoot[C]{\thepage}
+%% -------------------------------------------------------------
+%% Environments -------------------------------------------------
+\newmdenv[
+  linecolor=gray,
+  fontcolor=gray,
+  linewidth=0.2em,
+  topline=false,
+  bottomline=false,
+  rightline=false,
+  skipabove=\topsep
+  skipbelow=\topsep,
+]{ayuda}
+%% -------------------------------------------------------------
+%% Colors ------------------------------------------------------
+\definecolor{gray}{rgb}{0.5, 0.5, 0.5}
+%% -------------------------------------------------------------
+%% Aliases ------------------------------------------------------
+\newcommand{\scipy}{\texttt{scipy}}
+%% -------------------------------------------------------------
+%% =============================================================
+%% =============================================================================
+%% CONFIGURACION DEL DOCUMENTO =================================================
+%% Llenar con la información pertinente al curso y la tarea
+%%
+\newcommand{\tareanro}{1}
+\newcommand{\fechaentrega}{26/09/2020 21:59 hrs}
+\newcommand{\semestre}{2020B}
+\newcommand{\profesor}{Valentino González}
+%% =============================================================================
+%% =============================================================================
+
+
+\begin{document}
+\thispagestyle{firstpage}
+
+\begin{center}
+  {\uppercase{\LARGE \bf Tarea \tareanro}}\\
+  Fecha de entrega: \fechaentrega
+\end{center}
+
+
+%% =============================================================================
+%% ENUNCIADO ===================================================================
+\noindent{\large \bf Problema}
+
+En esta tarea crearemos una función que calcule la función {\it percentil},
+un problema común en estadística (muy usado para interpretar resultados
+experimentales).
+
+Consideremos un experimento cuyo resultado es un número real que podemos tratar
+como si fuese aleatorio dadas las incertidumbres asociadas al experimento. A la
+probabilidad asociada a cada posible resultado $x$ ---en realidad un intervalo
+infinitesimal alrededor de un resultado $x$--- se le llama la función densidad
+de probabilidad $pdf(x)$. De modo que $pdf(x) dx$ es la probabilidad de que al
+realizar el experimento se obtenga como resultado el un valor entre $x$ y
+$x+dx$.
+
+Notemos que, entonces, la probabilidad de obtener un valor menor que $a$ se
+puede calcular como:
+
+$$p(x<a) = \int_{-\infty}^{a} pdf(x) dx $$
+
+Una pregunta común que surge al realizar un experimento es qué valor de $a$ me
+asegura que esa probabilidad sea mayor que, por ejemplo, 95\%. A eso se le
+llama la función percentil evaluada en 0.95 y corresponde a resolver
+\underline{para $a$} el siguiente problema:
+
+$$ 0.95 = \int_{-\infty}^{a} pdf(x) dx $$
+
+En esta tarea consideraremos para la $pdf$ una distribución $\chi^2$:
+
+$$ pdf(x) = \chi^2(x) = \frac{1}{2^{k/2}\Gamma(k/2)} x^{k/2-1} e^{-x/2} $$
+
+donde $\Gamma$ es la función Gamma:
+
+$$ \Gamma(z) = \int_0^{\infty} x^{z-1}e^{-x}dx $$
+
+$\chi^2$ tiene un parámetro: $k$. Para la tarea Ud. debe considerar $k=4.XXX$,
+donde $XXX$ son los 3 últimos dígitos de su RUT antes del guión.
+
+{\bf Calcule el valor de $a$ que resuelve $p(x<a) = 0.95$.}
+
+{\bf Ud. debe escribir su propia función que calcule $\chi^2(x)$, las integrales, y
+el algoritmo que resuelve la ecuación. No use librerías.}
+
+\begin{ayuda}
+  \small
+  \noindent {\bf Sugerencias.}
+
+  Esta es una serie de \underline{sugerencias} sobre cómo resolver el problema.
+  No es estrictamente necesario seguirlas.
+
+  \begin{enumerate}
+    \item Escriba una función que calcule $\Gamma(x)$. Para comprobar que su
+      función hace lo correcto, compruebe que $\Gamma(n) = (n-1)!$. ¿Cómo
+      resolvió el problema del $\infty$ en el límite de integración?
+
+    \item Escriba otra función que calcule $\chi^2(x)$.
+
+    \item Escriba una función que calcule $f(a) = \int_0^{a} \chi^2(x) dx $.
+      Preocúpese de que la integral sea resuelta con buena precisión. Este es
+      un asunto importante a discutir en el informe. ¿Qué precisión eligió?
+
+    \item Escriba un algoritmo que resuelva $f(a) = 0.95$. ¿Qué algoritmo
+      utilizó y por qué? Si el algoritmo requiere algún parámetro: ¿qué
+      parámetros eligió y cómo los eligió?
+
+    \item En el informe se recomienda discutir temas como la precisión del
+      cálculo, el tiempo de ejecución, e incluir gráficos o tablas que
+      demuestren el resultado.
+  \end{enumerate}
+
+\end{ayuda}
+%% FIN ENUNCIADO ===============================================================
+%% =============================================================================
+
+\vspace{1em}
+\noindent{\bf Otras instrucciones importantes.}
+\begin{itemize}
+
+  \item Utilice \texttt{git} durante el desarrollo de la tarea para mantener un
+    historial de los cambios realizados. La siguiente
+    \href{https://education.github.com/git-cheat-sheet-education.pdf}{cheat
+    sheet} le puede ser útil. Esto no será evaluado esta vez pero evaluaremos
+    el use efectivo de \texttt{git} en el futuro, así que empiece a usarlo.
+
+  \item La tarea se entrega como un \texttt{push} simple a su repositorio
+    privado. El \texttt{push} debe incluir todos los códigos usados además de
+    su informe.
+
+  \item El informe debe ser entregado en formato \texttt{pdf}, este debe ser
+    claro sin información de más ni de menos. Esto es importante, no escriba de
+    más, esto no mejorará su nota sino que al contrario. 4 o 5 páginas son un
+    largo razonable para la presente tarea.  Asegúrese de utilizar figuras
+    efectivas y/o tablas para resumir sus resultados. Revise su ortografía.
+
+  \item No olvide indicar su RUT en el informe.
+
+\end{itemize}
+
+
+
+\end{document}
