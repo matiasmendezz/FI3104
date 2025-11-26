@@ -6,14 +6,13 @@ Este repositorio contiene las entregas de tareas y proyectos para el curso **FI3
 
 El repositorio está organizado en carpetas correspondientes a cada entrega:
 
-- **01-tarea-mxtixsmendez-master**: Primera entrega.
-- **02-tarea-mxtixsmendez-master**: Segunda entrega.
-- **03-tarea-mxtixsmendez-main**: Tercera entrega.
-- **04-tarea-mxtixsmendez-main**: Cuarta entrega.
-- **05-tarea-mxtixsmendez-main**: Quinta entrega.
-- **06-tarea-mxtixsmendez-main**: Sexta entrega (Contiene partes P1 y P2).
+- **Tarea_01**: Primera entrega.
+- **Tarea_02**: Segunda entrega.
+- **Tarea_03**: Tercera entrega.
+- **Tarea_04**: Cuarta entrega.
+- **Tarea_05**: Quinta entrega.
+- **Tarea_06**: Sexta entrega (Contiene partes P1 y P2).
 
 ## Descripción
 
 Cada carpeta contiene el código fuente, scripts y recursos necesarios para la resolución de los problemas planteados en cada tarea.
-
